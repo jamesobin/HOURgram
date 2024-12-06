@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/noheader}">
+		<section layout:fragment="contents" class="contents d-flex justify-content-center align-items-center mt-5">
+			<div class="col-5">
+				<div class="input-box my-5 p-5 rounded-lg border border-dark">
+					<h1 class="text-center"><span style="color:#ef8080">H:OUR</span>gram</h1>
+					<input type="text" class="form-control mt-5" placeholder="아이디">
+					<input type="password" class="form-control mt-3" placeholder="비밀번호">
+					<button type="button" class="login-btn btn btn-block text-white mt-3">로그인</button>
+				</div> 
+				<div class="joinLink-box mb-5 p-3 rounded-lg border border-dark">
+					<div class="text-center d-flex justify-content-center align-items-center">
+						<div class="mr-3">계정이 없으신가요?</div>
+						<a href="/user/join-view" style="color:#ef8080">가입하기</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<script layout:fragment="script"></script>
+</html>
