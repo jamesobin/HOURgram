@@ -7,9 +7,11 @@
 			<div class="col-5">
 				<div class="input-box my-5 p-5 rounded-lg border border-dark">
 					<h1 class="text-center"><span style="color:#ef8080">H:OUR</span>gram</h1>
-					<input type="text" class="form-control mt-5" placeholder="아이디">
-					<input type="password" class="form-control mt-3" placeholder="비밀번호">
-					<button type="button" class="login-btn btn btn-block text-white mt-3">로그인</button>
+					<form id="loginForm">
+						<input type="text" class="form-control mt-5" placeholder="아이디" id="loginIdInput">
+						<input type="password" class="form-control mt-3" placeholder="비밀번호" id="passwordInput">
+						<button type="submit" class="btn btn-block text-white mt-3" id="loginBtn">로그인</button>
+					</form>
 				</div> 
 				<div class="joinLink-box mb-5 p-3 rounded-lg border border-dark">
 					<div class="text-center d-flex justify-content-center align-items-center">
@@ -20,5 +22,40 @@
 			</div>
 		</section>
 		
-		<script layout:fragment="script"></script>
+		<script layout:fragment="script">
+	       	$(document).ready(function() {
+	       		$("#loginForm").on("submit", function(e) {
+	       			// submit 이벤트가 가진 고유의 기능을 막는다
+	       			e.preventDefault();
+	       			
+	       			let id = $("#loginIdInput").val();
+	       			let password = $("#passwordInput").val();
+	       			
+	       			if(id == "") {
+	       				alert("아이디를 입력하세요");
+	       				return ;
+	       			}
+	       			if(password == "") {
+	       				alert("비밀번호를 입력하세요");
+	       				return ;
+	       			}
+	       			
+	       			$.ajax({
+	       				type:"post"
+	       				, url:"/user/login"
+	       				, data:{"loginId":id, "password":password}
+	       				, success:function(response) {
+	       					if(response.result == "success") {
+	       						location.href = "/post/timeline-view";
+	       					} else {
+	       						alert("아이디와 비밀번호를 확인해주세요");
+	       					}
+	       				}
+	       				, error:function() {
+	       					alert("로그인 에러!");
+	       				}
+	       			});
+	       		});
+	       	});
+		</script>
 </html>

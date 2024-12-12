@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+		<header class="d-flex align-items-center justify-content-between border-bottom">
+			<div class="logo font-weight-bold">
+				<span style="color:#ef8080">H:OUR</span>gram
+			</div>
+			<div th:if="${session.userId != null}">
+	        	<span th:text="${session.userLoginId}">사용자</span> <a href="/user/logout">로그아웃</a>
+	        </div>
+		</header>

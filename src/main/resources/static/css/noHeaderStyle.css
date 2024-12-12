@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+#wrap {
+	width:1200px;
+	margin:0 auto;
+}
+
+#loginBtn {
+	background-color:#ef8080;
+}
+
+#idDuplicateBtn {
+	background-color:#ef8080;
+}
+
+#profileNameDuplicateBtn {
+	background-color:#ef8080;
+}
+
+#joinBtn {
+	background-color:#ef8080;
+}
+
+::placeholder {
+	font-size:12px;
+}
+
+footer {
+	height:70px;
+	font-size:12px;
+}

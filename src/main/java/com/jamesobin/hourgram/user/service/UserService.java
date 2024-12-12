@@ -2,7 +2,8 @@ package com.jamesobin.hourgram.user.service;
 
 import org.springframework.stereotype.Service;
 
-import com.jamesobin.hourgram.common.MD5HashingEncoder;
+import com.jamesobin.hourgram.common.SHA256HashingEncoder;
+import com.jamesobin.hourgram.user.domain.User;
 import com.jamesobin.hourgram.user.repository.UserRepository;
 
 @Service
@@ -23,7 +24,7 @@ public class UserService {
 			, String email
 			, String profileName) {
 		
-		String encodingPassword = MD5HashingEncoder.encode(password);
+		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		int count = userRepository.insertUser(loginId, encodingPassword, name, email, profileName);
 		
@@ -32,6 +33,40 @@ public class UserService {
 		} else {
 			return false;
 		}
+	}
+	
+	public boolean isDuplicateId(String loginId) {
+		
+		int count = userRepository.selectCountLoginId(loginId);
+		
+		if(count > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isDuplicateProfileName(String profileName) {
+		
+		int count = userRepository.selectCountProfileName(profileName);
+		
+		if(count > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public User getUser(String loginId, String password) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		return userRepository.selectUser(loginId, encodingPassword);
+	}
+	
+	
+	public User getUserById(int id) {
+		return userRepository.selectUserById(id);
 	}
 	
 }

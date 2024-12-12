@@ -22,4 +22,53 @@
  			, #{profileName}
  		)
  	</insert>
+ 	<select id="selectCountLoginId" parameterType="string" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			`user`
+		WHERE 
+			`loginId` = #{loginId}
+	</select>
+	 <select id="selectCountProfileName" parameterType="string" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			`user`
+		WHERE 
+			`profileName` = #{profileName}
+	</select>
+	<select id="selectUser" parameterType="map"
+	resultType="com.jamesobin.hourgram.user.domain.User">
+		SELECT 
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `profileName`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE 
+			`loginId` = #{loginId}
+			AND `password` = #{password}
+	</select>
+	<select id="selectUserById" parameterType="int"
+	resultType="com.jamesobin.hourgram.user.domain.User">
+		SELECT 
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `profileName`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE
+			`id` = #{id}
+	</select>
  </mapper>

@@ -9,13 +9,22 @@
 					<h1 class="text-center"><span style="color:#ef8080">H:OUR</span>gram</h1>
 					<div class="d-flex align-items-center mt-5">
 						<input type="text" class="form-control col-9" id="idInput" placeholder="아이디">
-						<button type="button" class="btn btn-block btn-sm ml-2 text-white" id="duplicateBtn">중복확인</button>
+						<button type="button" class="btn btn-block btn-sm ml-2 text-white" id="idDuplicateBtn">중복확인</button>
 					</div>	
+					<div class="small text-success d-none" id="idAvailableText">사용 가능한 ID 입니다.</div>
+	                <div class="small text-danger d-none" id="idDuplicateText">중복된 ID 입니다.</div>
+	                
 					<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
 					<input type="password" class="form-control mt-3" id="passwordConfirmInput" placeholder="비밀번호 확인">
 					<input type="text" class="form-control mt-3" id="nameInput" placeholder="이름">
 					<input type="text" class="form-control mt-3" id="emailInput" placeholder="이메일">
-					<input type="text" class="form-control mt-3" id="profileNameInput" placeholder="프로필 이름">
+					<div class="d-flex align-items-center mt-3">
+						<input type="text" class="form-control col-9" id="profileNameInput" placeholder="프로필 이름">
+						<button type="button" class="btn btn-block btn-sm ml-2 text-white" id="profileNameDuplicateBtn">중복확인</button>
+					</div>
+					<div class="small text-success d-none" id="profileNameAvailableText">사용 가능한 프로필 이름입니다.</div>
+	                <div class="small text-danger d-none" id="profileNameDuplicateText">중복된 프로필 이름입니다.</div>
+
 					<button type="button" class="btn btn-block mt-3 text-white" id="joinBtn">가입하기</button>
 				</div> 
 				<div class="joinLink-box mb-5 p-3 rounded-lg border border-dark">
@@ -28,56 +37,157 @@
 		</section>
 
 		<script layout:fragment="script">
-			$(document).ready(function() {
-				$("#joinBtn").on("click", function() {
-					let id = $("#idInput").val();
-					let password = $("#passwordInput").val();
-					let passwordConfirm = $("#passwordConfirmInput").val();
-					let name = $("#nameInput").val();
-					let email = $("#emailInput").val();
-					let profileName = $("#profileNameInput").val();
-					
-					if(id == "") {
-						alert("아이디를 입력하세요");
-						return;
-					}
-					if(password == "") {
-						alert("비밀번호를 입력하세요");
-						return;
-					}
-					if(password != passwordConfirm) {
-						alert("비밀번호가 일치하지 않습니다");
-						return ;
-					}
-					if(name == "") {
-						alert("이름을 입력하세요");
-						return ;
-					}
-					if(email == "") {
-						alert("이메일을 입력하세요");
-						return ;
-					}
-					if(profileName == "") {
-						alert("프로필 이름을 입력하세요");
-						return ;
-					}
-					
-					$.ajax({
-						type:"post"
-						, url:"/user/join"
-						, data:{"loginId":id, "password":password, "name":name, "email":email, "profileName":profileName}
-						, success:function(response) {
-							 if(response.result == "success") {
-								 location.href = "/user/login-view";
-							 } else {
-								 alert("회원가입 실패");
-							 }
-						}
-						, error:function() {
-							alert("회원가입 에러!");
-						}
-					});
-				});
-			});
+	    	$(document).ready(function() {
+	    		
+	    		var isIdDuplicateCheck = false;
+	    		var isDuplicateId = true;
+	    		
+	    		$("#idInput").on("input", function() {
+	    			isIdDuplicateCheck = false;
+	    			isDuplicateId = true;
+	    			$("#idAvailableText").addClass("d-none");
+	    			$("#idDuplicateText").addClass("d-none");
+	    		});
+	    		
+	    		$("#idDuplicateBtn").on("click", function() {
+	    			let id = $("#idInput").val();
+	    			
+	    			if(id == "") {
+	    				alert("아이디를 입력하세요");
+	    				return ;
+	    			}
+	    			
+	    			$.ajax({
+	    				type:"get"
+	    				, url:"/user/duplicate-id"
+	    				, data:{"loginId":id}
+	    				, success:function(response) {
+	    					
+	    					isIdDuplicateCheck = true;
+	    					
+	    					if(response.isIdDuplicate) {
+	    						$("#idDuplicateText").removeClass("d-none");
+	    						$("#idAvailableText").addClass("d-none");
+	    						isDuplicateId = true;
+	    					} else {
+	    						$("#idAvailableText").removeClass("d-none");
+	    						$("#idDuplicateText").addClass("d-none");
+	    						isDuplicateId = false;
+	    					}
+	    				}
+	    				, error:function() {
+	    					alert("중복확인 에러!");
+	    				}
+	    			});
+	    		});
+
+	    		var isProfileNameDuplicateCheck = false;
+	    		var isDuplicateProfileName = true;
+	    		
+	    		$("#profileNameInput").on("input", function() {
+	    			isProfileNameDuplicateCheck = false;
+	    			isDuplicateProfileName = true;
+	    			$("#profileNameAvailableText").addClass("d-none");
+	    			$("#profileNameDuplicateText").addClass("d-none");
+	    		});
+	    		
+	    		$("#profileNameDuplicateBtn").on("click", function() {
+	    			let profileName = $("#profileNameInput").val();
+	    			
+	    			if(profileName == "") {
+	    				alert("프로필 이름을 입력하세요");
+	    				return ;
+	    			}
+	    			
+	    			$.ajax({
+	    				type:"get"
+	    				, url:"/user/duplicate-profileName"
+	    				, data:{"profileName":profileName}
+	    				, success:function(response) {
+	    					
+	    					isProfileNameDuplicateCheck = true;
+	    					
+	    					if(response.isProfileNameDuplicate) {
+	    						$("#profileNameDuplicateText").removeClass("d-none");
+	    						$("#profileNameAvailableText").addClass("d-none");
+	    						isDuplicateProfileName = true;
+	    					} else {
+	    						$("#profileNameAvailableText").removeClass("d-none");
+	    						$("#profileNameDuplicateText").addClass("d-none");
+	    						isDuplicateProfileName = false;
+	    					}
+	    				}
+	    				, error:function() {
+	    					alert("중복확인 에러!");
+	    				}
+	    			});
+	    		});
+
+	    		$("#joinBtn").on("click", function() {
+	    			let id = $("#idInput").val();
+	    			let password = $("#passwordInput").val();
+	    			let passwordConfirm = $("#passwordConfirmInput").val();
+	    			let name = $("#nameInput").val();
+	    			let email = $("#emailInput").val();
+	    			let profileName = $("#profileNameInput").val();
+	    			
+	    			if(id == "") {
+	    				alert("아이디를 입력하세요");
+	    				return ;
+	    			}
+	    			if(!isIdDuplicateCheck) {
+	    				alert("중복체크를 해주세요");
+	    				return ;
+	    			}
+	    			if(isDuplicateId) {
+	    				alert("중복된 아이디 입니다");
+	    				return ;
+	    			}
+	    			if(password == "") {
+	    				alert("비밀번호를 입력하세요");
+	    				return ;
+	    			}
+	    			if(password != passwordConfirm) {
+	    				alert("비밀번호가 일치하지 않습니다");
+	    				return ;
+	    			}
+	    			if(name == "") {
+	    				alert("이름을 입력하세요");
+	    				return ;
+	    			}
+	    			if(email == "") {
+	    				alert("이메일을 입력하세요");
+	    				return ;
+	    			}
+	    			if(profileName == "") {
+	    				alert("프로필 이름을 입력하세요");
+	    				return ;
+	    			}
+	    			if(!isProfileNameDuplicateCheck) {
+	    				alert("중복체크를 해주세요");
+	    				return ;
+	    			}
+	    			if(isDuplicateProfileName) {
+	    				alert("중복된 프로필 이름 입니다");
+	    				return ;
+	    			}
+	    			
+	    			$.ajax({
+	    				type:"post"
+	    				, url:"/user/join"
+	    				, data:{"loginId":id, "password":password, "name":name, "email":email, "profileName":profileName}
+	    				, success:function(response) {
+	    					if(response.result == "success") {
+	    						location.href = "/user/login-view";
+	    					} else {
+	    						alert("회원가입 실패!");
+	    					}
+	    				}
+	    				, error:function() {
+	    					alert("회원가입 에러");
+	    				}
+	    			});
+	    		});
+	    	});
 		</script>
 </html>

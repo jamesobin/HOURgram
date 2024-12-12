@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default}">
+    
+		<section layout:fragment="contents" class="contents">	
+			<article class="main-contents border-left d-flex justify-content-center">
+				<div class="input-box border border-dark rounded col-10 my-4 p-4">
+					<div class="text-center">
+						<h2>새 게시물 만들기</h2>
+					</div>
+					<div class="d-flex">
+						<div class="image-input-group mt-4 col-7">
+							<div class="image-box border d-flex justify-content-center align-items-center"></div>
+							<label class="btn btn-sm mt-3 text-white" id="fileBtn">사진 선택<input type="file" hidden id="fileInput"></label>
+						</div>
+						<div class="contents-input-group mt-4 col-5">
+							<div class="profileName-box">_kw5n</div>
+							<textarea class="form-control" id="contentsInput" placeholder="내용 입력..."></textarea>
+							<button type="button" class="btn btn-sm mt-3 text-white" id="uploadBtn">공유하기</button>
+						</div>
+					</div>
+				</div>
+			</article>
+		</section>
+	<script layout:fragment="script">
+		$(document).ready(function() {
+		    $("#fileInput").change(function (event) {
+		        const file = event.target.files[0]; // 첫 번째 파일
+
+		        if (file) {
+		            const image = new Image();
+		            const ImageTempUrl = window.URL.createObjectURL(file);
+
+		            image.src = ImageTempUrl;
+
+		            $(".image-box").empty(); // 기존 이미지를 제거
+		            $(".image-box").append(image); // 새 이미지를 추가
+		        }
+		    });
+			
+			$("#uploadBtn").on("click", function() {
+				let contents = $("#contentsInput").val();
+				
+				let file = $("#fileInput")[0].files[0];
+				
+				if(contents == "") {
+					alert("내용을 입력하세요");
+					return ;
+				}
+				if(file == null) {
+					alert("이미지를 선택해 주세요");
+					return ;
+				}
+				
+				let formData = new FormData();
+				
+				formData.append("contents", contents);
+				formData.append("imageFile", file);
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/create"
+					, data:formData
+					, enctype:"mulipart/form-data"
+					, processData:false
+					, contentType:false
+					, success:function(response) {
+						if(response.result == "success") {
+							location.href = "/post/timeline-view";
+						} else {
+							alert("게시 실패!");
+						}
+					}
+					, error:function() {
+						alert("게시 에러!");
+					}
+				});
+			});
+		});
+	</script>
+</html>

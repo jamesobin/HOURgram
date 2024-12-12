@@ -3,12 +3,16 @@ package com.jamesobin.hourgram.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jamesobin.hourgram.user.domain.User;
 import com.jamesobin.hourgram.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @RequestMapping("/user")
@@ -32,6 +36,48 @@ public class UserRestController {
 		Map<String, String> resultMap = new HashMap<>();
 		
 		if(userService.addUser(loginId, password, name, email, profileName)) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
+	
+	@GetMapping("/duplicate-id")
+	public Map<String, Boolean> isDuplicateId(@RequestParam("loginId") String loginId) {
+		
+		Map<String, Boolean> resultMap = new HashMap<>();
+		
+		resultMap.put("isIdDuplicate", userService.isDuplicateId(loginId));
+		
+		return resultMap;
+	}
+	
+	@GetMapping("/duplicate-profileName")
+	public Map<String, Boolean> isDuplicateProfileName(@RequestParam("profileName") String profileName) {
+		
+		Map<String, Boolean> resultMap = new HashMap<>();
+		
+		resultMap.put("isProfileDuplicate", userService.isDuplicateProfileName(profileName));
+		
+		return resultMap;
+	}
+	
+	@PostMapping("/login")
+	public Map<String, String> login(
+			@RequestParam("loginId") String loginId
+			, @RequestParam("password") String password
+			,  HttpSession session) {
+		
+		User user = userService.getUser(loginId, password);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		if(user != null) {
+			
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userLoginId", user.getLoginId());
+			
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");

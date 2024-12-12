@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default}">
+    
+		<section layout:fragment="contents" class="contents">
+			<article class="main-contents d-flex justify-content-center border-left">
+				<!-- 타임라인 -->
+				<div class="timeline my-4 p-0">
+					<!-- 카드 -->
+					<div th:each="card:${cardList}" class="mt-3 mb-5">
+						<div class="d-flex align-items-center p-2 border-top border-dark">
+							<i class="bi bi-person-circle mr-3"></i>
+							<div th:text="${card.profileName}">user</div>
+						</div>
+						<div class="d-flex justify-content-center border border-dark">
+							<img class="w-100" th:src="${card.imagePath}">
+						</div>
+						<div class="p-2">
+							<i class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i>
+							<span>좋아요 11개</span> 
+						</div>
+						<div class="p-2">
+							<b th:text="${card.profileName}">user</b> <span th:text="${card.contents}">안녕</span>
+						</div>
+						<!-- 댓글 목록 -->
+						<div class="comment-box border-top border-bottom border-dark p-2">
+							<div>
+								<div>
+									<b>bada</b> <span>안녕</span>
+								</div>
+								<div>
+									<b>user</b> <span>반가워요</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-between comment-input-box mt-2">
+								<input type="text" class="form-control comment-input" placeholder="댓글 달기..." th:id="|commentInput${card.postId}|">
+								<button type="button" class="btn comment-btn p-0" th:data-post-id="${card.postId}"><i class="bi bi-caret-up-fill text-white"></i></button>
+							</div>
+						</div>
+					</div>
+					<!-- /카드 -->
+					<div id="addCard"></div>
+				</div>
+				<!-- /타임라인 -->
+			</article>
+		</section>
+	
+	<script layout:fragment="script">
+		$(document).ready(function() {
+			$(".comment-btn").on("click", function() {
+				
+				let postId = $(this).data("post-id");
+				
+				// let comment = $(this).prev().val();
+				let comment = $("#commentInput" + postId).val();
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/comment/create"
+					, data:{"postId":postId, "contents":comment}
+					, success:function(response) {
+						if(response.result == "success") {
+							location.reload();
+						} else {
+							alert("댓글 작성 실패");
+						}
+					}
+					, error:function() {
+						alert("댓글 작성 에러!");
+						return ;
+					}
+				});
+			});
+			
+			$(".like-btn").on("click", function() {
+				// 이벤트가 발생한 태그 객체 
+				let postId = $(this).data("post-id");
+				
+				$.ajax({
+					type:"post"
+					, url:"/post/like"
+					, data:{"postId":postId}
+					, success:function(response) {
+						if(response.result == "success") {
+							location.reload();
+						} else {
+							alert("좋아요 실패");
+						}
+					}
+					, error:function() {
+						alert("좋아요 에러!");
+					}
+				});
+			});
+		});
+	</script>	
+</html>
