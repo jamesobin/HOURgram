@@ -18,8 +18,9 @@
 							<img class="w-100" th:src="${card.imagePath}">
 						</div>
 						<div class="p-2">
-							<i class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i>
-							<span>좋아요 11개</span> 
+							<i th:unless="${card.isLike}" class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i>
+							<i th:if="${card.isLike}" class="bi bi-heart-fill text-danger"></i>
+							<span th:text="|좋아요 ${card.likeCount}개|">좋아요 11개</span> 
 						</div>
 						<div class="p-2">
 							<b th:text="${card.profileName}">user</b> <span th:text="${card.contents}">안녕</span>
@@ -27,11 +28,8 @@
 						<!-- 댓글 목록 -->
 						<div class="comment-box border-top border-bottom border-dark p-2">
 							<div>
-								<div>
-									<b>bada</b> <span>안녕</span>
-								</div>
-								<div>
-									<b>user</b> <span>반가워요</span>
+								<div th:each="comment:${card.commentList}">
+									<b>user</b> <span th:text="${comment.contents}">반가워요</span>
 								</div>
 							</div>
 							<div class="d-flex justify-content-between comment-input-box mt-2">

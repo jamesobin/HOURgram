@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jamesobin.hourgram.post.dto.CardDTO;
 import com.jamesobin.hourgram.post.service.PostService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/post")
 @Controller
 public class PostController {
@@ -26,9 +28,11 @@ public class PostController {
 	}
 	
 	@GetMapping("/timeline-view")
-	public String timeline(Model model) {
+	public String timeline(Model model, HttpSession session) {
 		
-		List<CardDTO> cardList = postService.getPostList();
+		int userId = (Integer)session.getAttribute("userId");
+		
+		List<CardDTO> cardList = postService.getPostList(userId);
 		
 		model.addAttribute("cardList", cardList);
 		

@@ -1,5 +1,9 @@
 package com.jamesobin.hourgram.post.dto;
 
+import java.util.List;
+
+import com.jamesobin.hourgram.comment.domain.Comment;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,5 +18,11 @@ public class CardDTO {
 	private String imagePath;
 	
 	private String profileName;
+	
+	private int likeCount;
+	
+	private boolean isLike;
+	
+	List<Comment> commentList;
 
 }
