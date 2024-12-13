@@ -2,7 +2,7 @@ package com.jamesobin.hourgram.post.dto;
 
 import java.util.List;
 
-import com.jamesobin.hourgram.comment.domain.Comment;
+import com.jamesobin.hourgram.comment.dto.CommentDTO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +23,6 @@ public class CardDTO {
 	
 	private boolean isLike;
 	
-	List<Comment> commentList;
+	List<CommentDTO> commentList;
 
 }

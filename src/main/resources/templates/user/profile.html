@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default}">
+	
+	<section layout:fragment="contents" class="contents">
+		<article class="main-contents border-left">
+			<div class="name-box d-flex">
+				<div class="image-box bg-dark col-3"></div>
+				<div class="profilename-box bg-warning col-9"></div>
+			</div>
+			<div class="post-box bg-danger">
+				<div class="post-count-box bg-success"></div>
+				<div class="post-box"></div>
+			</div>
+		</article>
+	</section>
+	
+	<script layout:fragment="script"></script>
+</html>

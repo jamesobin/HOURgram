@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jamesobin.hourgram.comment.domain.Comment;
+import com.jamesobin.hourgram.comment.dto.CommentDTO;
 import com.jamesobin.hourgram.comment.service.CommentService;
 import com.jamesobin.hourgram.common.FileManager;
 import com.jamesobin.hourgram.like.service.LikeService;
@@ -67,7 +67,7 @@ public class PostService {
 			
 			boolean isLike = likeService.isLike(post.getId(), loginUserId);
 			
-			List<Comment> commentList = commentService.getCommentList(post.getId());
+			List<CommentDTO> commentList = commentService.getCommentList(post.getId());
 			
 			CardDTO card = CardDTO.builder()
 			.postId(post.getId())

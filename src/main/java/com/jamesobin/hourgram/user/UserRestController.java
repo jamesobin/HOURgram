@@ -74,7 +74,6 @@ public class UserRestController {
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(user != null) {
-			
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userLoginId", user.getLoginId());
 			

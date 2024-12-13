@@ -20,6 +20,11 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@GetMapping("/profile-view")
+	public String profile() {
+		return "user/profile";
+	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 	

@@ -29,7 +29,7 @@
 						<div class="comment-box border-top border-bottom border-dark p-2">
 							<div>
 								<div th:each="comment:${card.commentList}">
-									<b>user</b> <span th:text="${comment.contents}">반가워요</span>
+									<b th:text="${comment.profileName}">user</b> <span th:text="${comment.contents}">반가워요</span>
 								</div>
 							</div>
 							<div class="d-flex justify-content-between comment-input-box mt-2">
