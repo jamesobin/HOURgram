@@ -30,6 +30,7 @@ public class UserController {
 	
 		session.removeAttribute("userId");
 		session.removeAttribute("userLoginId");
+		session.removeAttribute("userProfileName");
 		
 		return "redirect:/user/login-view";
 	}

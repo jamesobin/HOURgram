@@ -16,7 +16,7 @@
 							<label class="btn btn-sm mt-3 text-white" id="fileBtn"><i class="bi bi-card-image" id="imageButton"></i><input type="file" hidden id="fileInput"></label>
 						</div>
 						<div class="contents-input-group mt-4 col-5">
-							<div class="profileName-box">_kw5n</div>
+							<div class="profileName-box" th:text="${session.userProfileName}">_kw5n</div>
 							<textarea class="form-control" id="contentsInput" placeholder="내용 입력..."></textarea>
 							<button type="button" class="btn btn-sm mt-3 text-white" id="uploadBtn">공유하기</button>
 						</div>

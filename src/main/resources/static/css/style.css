@@ -30,20 +30,13 @@ aside {
 	padding-top:80px;
 }
 
-.name-box > .image-box {
-	height:200px;
+.post-box > .post-list-box {
+	height:350px;
 }
 
-.name-box > .profilename-box {
-	height:200px;
-}
-
-.main-contents > .post-box {
-	height:400px;
-}
-
-.post-box > .post-count-box {
-	height:50px;
+.post-list-box > .post {
+	width:300px;
+	height:300px;
 }
 
 .image-input-group > .image-box {

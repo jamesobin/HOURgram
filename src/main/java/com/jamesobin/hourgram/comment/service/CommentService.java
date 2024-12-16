@@ -60,5 +60,10 @@ public class CommentService {
 		
 		return commentDTOList;
 	}
+	
+	// 게시글 삭제시 댓글도 삭제
+	public void deleteCommentByPostId(int postId) {
+		commentRepository.deleteByPostId(postId);
+	}
 
 }

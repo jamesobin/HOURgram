@@ -3,6 +3,6 @@
 				<span style="color:#ef8080">H:OUR</span>gram
 			</div>
 			<div th:if="${session.userId != null}">
-	        	<span th:text="${session.userLoginId}">사용자</span> <a href="/user/logout">로그아웃</a>
+	        	<span th:text="${session.userProfileName}">사용자</span> <a href="/user/logout">로그아웃</a>
 	        </div>
 		</header>

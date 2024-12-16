@@ -6,13 +6,25 @@
 	
 	<section layout:fragment="contents" class="contents">
 		<article class="main-contents border-left">
-			<div class="name-box d-flex">
-				<div class="image-box bg-dark col-3"></div>
-				<div class="profilename-box bg-warning col-9"></div>
+			<div class="profile-box d-flex py-5">
+				<div class="image-box col-3 d-flex justify-content-center">
+					<i class="bi bi-person-circle mr-3 display-1"></i>
+				</div>
+				<div class="profilename-box col-9">
+					<div class="display-4" th:text="${session.userProfileName}">_kw5n</div>
+					<div class="display-5 mt-4">권오빈</div>
+				</div>
 			</div>
-			<div class="post-box bg-danger">
-				<div class="post-count-box bg-success"></div>
-				<div class="post-box"></div>
+			<div class="post-box">
+				<div class="post-count-box px-3">
+					<h5>게시물 4</h5>
+					<hr>
+				</div>
+				<div class="post-list-box bg-primary d-flex px-3">
+					<div class="post bg-dark mr-4"></div>
+					<div class="post bg-dark mr-4"></div>
+					<div class="post bg-dark mr-4"></div>
+				</div>
 			</div>
 		</article>
 	</section>

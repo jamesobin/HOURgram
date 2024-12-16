@@ -48,4 +48,28 @@ public class FileManager {
 		return "/images" + directoryName + "/" + file.getOriginalFilename();
 	}
 	
+	public static boolean removeFile(String filePath) { // /images/2_89723498273/test.png
+		if(filePath == null) {
+			return false;
+		}
+		
+		// E:\\웹개발\\06.springProject\\upload\\memo/2_89723498273/test.png
+		
+		String fullFilePath = FILE_UPLOAD_PATH + filePath.replace("/images", "");
+		Path path = Paths.get(fullFilePath);
+		
+		Path directoryPath = path.getParent();
+		
+		try {
+			Files.delete(path);
+			Files.delete(directoryPath);
+			
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+			return false;
+		}
+	}
+	
 }

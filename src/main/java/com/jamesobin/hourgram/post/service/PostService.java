@@ -2,6 +2,7 @@ package com.jamesobin.hourgram.post.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +51,29 @@ public class PostService {
 		} catch(Exception e) {
 			return false;
 		}
+	}
+	
+	public boolean deletePost(int id, int userId) {
+		Optional<Post> optionalPost = postRepository.findById(id);
 		
+		if(optionalPost.isPresent()) {
+			Post post = optionalPost.get();
+			
+			if(post.getUserId() == userId) {
+				FileManager.removeFile(post.getImagePath());
+				likeService.deleteLikeByPostId(id);
+				commentService.deleteCommentByPostId(id);
+				
+				postRepository.delete(post);
+				
+				return true;				
+			} else {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
 	}
 	
 	public List<CardDTO> getPostList(int loginUserId) {

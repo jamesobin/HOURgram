@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jamesobin.hourgram.user.domain.User;
 import com.jamesobin.hourgram.user.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -68,14 +69,17 @@ public class UserRestController {
 	public Map<String, String> login(
 			@RequestParam("loginId") String loginId
 			, @RequestParam("password") String password
-			,  HttpSession session) {
+			,  HttpServletRequest request) {
 		
 		User user = userService.getUser(loginId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(user != null) {
+			HttpSession session = request.getSession();
+			
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userProfileName", user.getProfileName());
 			
 			resultMap.put("result", "success");
 		} else {
