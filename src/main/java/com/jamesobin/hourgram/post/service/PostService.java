@@ -108,5 +108,10 @@ public class PostService {
 		
 		return cardList;
 	}
+	
+	public int getPostCountByUserId(int userId) {
+		int postCount = postRepository.countByUserId(userId);
+		return postCount;
+	}
 
 }

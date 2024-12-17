@@ -80,6 +80,7 @@ public class UserRestController {
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userLoginId", user.getLoginId());
 			session.setAttribute("userProfileName", user.getProfileName());
+			session.setAttribute("userName", user.getName());
 			
 			resultMap.put("result", "success");
 		} else {

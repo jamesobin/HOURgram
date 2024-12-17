@@ -12,7 +12,7 @@
 				</div>
 				<div class="profilename-box col-9">
 					<div class="display-4" th:text="${session.userProfileName}">_kw5n</div>
-					<div class="display-5 mt-4">권오빈</div>
+					<div class="display-5 mt-4" th:text="${session.userName}">권오빈</div>
 				</div>
 			</div>
 			<div class="post-box">
@@ -20,10 +20,16 @@
 					<h5>게시물 4</h5>
 					<hr>
 				</div>
-				<div class="post-list-box bg-primary d-flex px-3">
-					<div class="post bg-dark mr-4"></div>
-					<div class="post bg-dark mr-4"></div>
-					<div class="post bg-dark mr-4"></div>
+				<div class="post-list-box d-flex px-3">
+					<div class="post-image-box border mr-4">
+						<img src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_1280.jpg">
+					</div>
+					<div class="post-image-box border mr-4">
+						<img src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_1280.jpg">
+					</div>
+					<div class="post-image-box border mr-4">
+						<img src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_1280.jpg">
+					</div>
 				</div>
 			</div>
 		</article>
